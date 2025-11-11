@@ -4,6 +4,9 @@
   --background: #ffffff;
   --foreground: #171717;
 
+  --background-primary: #192284;
+  --foreground-primary: #ffff;
+
   --background-secondary: #e4e4e4;
 
   --muted: 210 40% 96.1%;
@@ -25,6 +28,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  --color-background-primary: var(--background-primary);
+  --color-foreground-primary: var(--foreground-primary);
+
   --color-background-secondary: var(--background-secondary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);

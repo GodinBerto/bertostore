@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import NavHeader from "@/components/header";
+import SubNavbar from "@/components/subNavbar";
 
 const openSans = Open_Sans({
   variable: "--open-sans",
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body className={`${openSans.variable}  antialiased bg-background`}>
         <NavHeader />
         <Navbar />
+        <SubNavbar />
         {children}
         <Footer />
       </body>

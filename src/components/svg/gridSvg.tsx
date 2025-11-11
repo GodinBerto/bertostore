@@ -1,27 +1,16 @@
 "use client";
-import { useState } from "react";
 
-export default function SlantedLinesBackground({
+export default function GridCellSVG({
   lineColor = "#e4e4e4",
   hoverColor = "blue",
   angle = -30,
-  spacing = 1,
-  thickness = 0.2,
+  spacing = 0.05, // must be between 0–1
+  thickness = 0.005, // must be between 0–1
   className = "absolute inset-0 pointer-events-none",
   hover = false,
-  setHover,
 }: SlantedLinesBackgroundProps) {
-  //   const [hover, setHover] = useState(false);
-
   return (
-    <div
-      className={className}
-      //   onMouseEnter={() => {
-      //     setHover(true);
-      //     console.log("hovered");
-      //   }}
-      //   onMouseLeave={() => setHover(false)}
-    >
+    <div className={className}>
       <svg
         className="w-full h-full"
         xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +20,7 @@ export default function SlantedLinesBackground({
         <defs>
           <pattern
             id="diagonal-lines"
-            patternUnits="userSpaceOnUse"
+            patternUnits="objectBoundingBox"
             width={spacing}
             height={spacing}
             patternTransform={`rotate(${angle})`}
@@ -40,7 +29,7 @@ export default function SlantedLinesBackground({
               x="0"
               y="0"
               width={thickness}
-              height={spacing}
+              height="1"
               fill={hover ? hoverColor : lineColor}
             />
           </pattern>
