@@ -3,12 +3,13 @@ import GridCellSVG from "./svg/gridSvg";
 import GridLayout from "./ui/grid";
 import Image from "next/image";
 import { products } from "@/constant/products";
+import { Button } from "./ui/button";
 
 export default function PopularProduct() {
   return (
     <div>
       <GridLayout>
-        <div className="grid grid-cols-5">
+        <div className="grid grid-cols-6">
           <div className="col-span-2 p-3 flex flex-col gap-3 border-r border-border">
             <h1 className="text-3xl font-semibold">Popular Products</h1>
             <p className="text-sm text-muted-foreground">
@@ -17,13 +18,13 @@ export default function PopularProduct() {
               Find the perfect fit for your needs today.
             </p>
           </div>
-          <div className="col-span-2 relative">
+          <div className="col-span-3 relative">
             <div className="absolute w-full h-full top-0">
               <GridCellSVG angle={1000} spacing={10} />
             </div>
           </div>
-          <div className="col-span-1 grid grid-rows-3 border-l border-border">
-            <div className="row-span-2 border-b border-border"></div>
+          <div className="col-span-1 grid grid-rows-4 border-l border-border">
+            <div className="row-span-3 border-b border-border"></div>
             <div className="row-span-1 grid grid-cols-3">
               <div className="col-span-1 flex justify-center items-center bg-background-primary text-foreground-primary">
                 <ChevronLeft />
@@ -68,7 +69,7 @@ export default function PopularProduct() {
                 </p>
 
                 {/* Title */}
-                <h3 className="text-sm font-medium mt-1 line-clamp-2">
+                <h3 className="text-sm font-medium mt-1 line-clamp-1">
                   {product.title}
                 </h3>
 
@@ -92,10 +93,10 @@ export default function PopularProduct() {
                 </div>
 
                 {/* Add to cart button */}
-                <button className="mt-4 flex items-center justify-center w-full gap-2 bg-primary text-white rounded-full py-2 hover:bg-primary/90 transition">
+                <Button className="rounded-md mt-4 flex items-center justify-center w-full gap-2 text-white py-2 hover:bg-primary/90 transition">
                   <ShoppingBag className="w-4 h-4" />
                   <span className="text-sm font-medium">Add to Cart</span>
-                </button>
+                </Button>
               </div>
             );
           })}
