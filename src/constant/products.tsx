@@ -28,7 +28,7 @@ export const products: Product = [
     title: "Dell XPS 13 Ultra Thin Performance Laptop",
     price: 1249.99,
     oldPrice: 1399.99,
-    image: "/images/products/Delllaptop.jpg",
+    image: "/images/products/laptop.jpg",
     rating: 5,
   },
   {
