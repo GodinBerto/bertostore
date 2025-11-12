@@ -1,16 +1,17 @@
 import HeroSection from "@/components/hero";
-import GridLayout from "@/components/ui/grid";
-import GridCellSVG from "@/components/svg/gridSvg";
-import Seperator from "@/components/seperator";
 import PopularProduct from "@/components/popularProduct";
+import QuickLinks from "@/components/quicklinks";
+import { VerticalSeperator } from "@/components/seperator";
 
 export default function Home() {
   return (
     <div>
-      <Seperator />
+      <VerticalSeperator />
       <HeroSection />
-      <Seperator />
+      <VerticalSeperator />
       <PopularProduct />
+      <VerticalSeperator />
+      <QuickLinks />
     </div>
   );
 }
