@@ -5,6 +5,7 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import NavHeader from "@/components/header";
 import SubNavbar from "@/components/subNavbar";
+import { VerticalSeperator } from "@/components/seperator";
 
 const openSans = Open_Sans({
   variable: "--open-sans",
@@ -28,6 +29,7 @@ export default function RootLayout({
         <Navbar />
         <SubNavbar />
         {children}
+        <VerticalSeperator />
         <Footer />
       </body>
     </html>

@@ -30,3 +30,35 @@ export const navLinks = [
   { label: "Blog", href: "/laptops" },
   { label: "Contact Us", href: "/laptops" },
 ];
+
+export const footerLinks = [
+  {
+    title: "COMPANY",
+    links: [
+      { label: "About Us", href: "/about" },
+      { label: "Careers", href: "/careers" },
+      { label: "Blog", href: "/blog" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
+  {
+    title: "SHOP",
+    links: [
+      { label: "All Products", href: "/products" },
+      { label: "New Arrivals", href: "/new-arrivals" },
+      { label: "Best Sellers", href: "/best-sellers" },
+      { label: "Brands", href: "/brands" },
+      { label: "Deals & Offers", href: "/deals" },
+    ],
+  },
+  {
+    title: "HELP",
+    links: [
+      { label: "Customer Support", href: "/support" },
+      { label: "FAQ", href: "/faq" },
+      { label: "Returns & Refunds", href: "/returns" },
+      { label: "Shipping Info", href: "/shipping" },
+      { label: "Warranty", href: "/warranty" },
+    ],
+  },
+];
