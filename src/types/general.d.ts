@@ -1,7 +1,13 @@
-type _children = {
-  children: ReactNode;
-};
+import type { ReactNode } from "react";
 
-type GridLayout = _children & {
-  className?: string;
-};
+declare global {
+  type _children = {
+    children: ReactNode;
+  };
+
+  type GridLayout = _children & {
+    className?: string;
+  };
+}
+
+export {};

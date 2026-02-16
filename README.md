@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+﻿# BertoStore (Next.js 16)
 
-## Getting Started
+BertoStore is now a full-stack dropshipping app with:
 
-First, run the development server:
+- Storefront: landing page, shop, product detail, cart, checkout, account page
+- Authentication: register, login, logout, `httpOnly` session cookies
+- Admin dashboard: overview metrics, product CRUD, order status management
+- API backend: Next.js Route Handlers + persistent JSON storage
+
+## Tech
+
+- Next.js App Router (`src/app`)
+- TypeScript + Tailwind CSS v4
+- Local JSON database files in `data/`
+
+## Quick Start
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Create env file:
+
+```bash
+cp .env.example .env.local
+```
+
+3. Run dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Storefront: http://localhost:3000
+- Admin: http://localhost:3000/dashboard
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Default Admin Credentials
 
-## Learn More
+When `data/users.json` is empty, the app seeds an admin user using:
 
-To learn more about Next.js, take a look at the following resources:
+- Email: `DEFAULT_ADMIN_EMAIL` (default `admin@bertostore.com`)
+- Password: `DEFAULT_ADMIN_PASSWORD` (default `Admin123!`)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Change these values in `.env.local` before production use.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## API Endpoints
 
-## Deploy on Vercel
+### Auth
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `POST /api/auth/logout`
+- `GET /api/auth/me`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Products
+
+- `GET /api/products`
+- `POST /api/products` (admin)
+- `GET /api/products/:id`
+- `PATCH /api/products/:id` (admin)
+- `DELETE /api/products/:id` (admin)
+
+### Orders
+
+- `POST /api/orders` (guest or signed-in)
+- `GET /api/orders` (admin: all, customer: own)
+- `GET /api/orders/:id`
+- `PATCH /api/orders/:id` (admin)
+
+### Dashboard
+
+- `GET /api/dashboard/stats` (admin)
+
+## Notes
+
+- Data persists to `data/products.json`, `data/users.json`, and `data/orders.json`.
+- Session signing uses `SESSION_SECRET`; set a strong secret in production.
+- Replace placeholder supplier URLs with your real dropshipping suppliers.

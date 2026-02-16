@@ -9,7 +9,7 @@ import BackgroundCover from "./backgroundCover";
 export default function HeroSection() {
   return (
     <GridLayout>
-      <div className="grid grid-cols-4">
+      <div className="grid grid-cols-1 md:grid-cols-4">
         <div className="col-span-1 border-r border-border">
           <ul className="flex flex-col">
             {categoriesLinks.map(({ label, href, icon: Icon }) => (
@@ -26,28 +26,27 @@ export default function HeroSection() {
           </ul>
         </div>
 
-        <div className="text-white col-span-3 bg-[url('/images/hero-bg.jpg')] bg-cover bg-center bg-no-repeat relative">
+        <div className="relative col-span-1 bg-[url('/images/hero-bg.jpg')] bg-cover bg-center bg-no-repeat text-white md:col-span-3">
           <BackgroundCover />
-          <div className="flex flex-col gap-5 px-10 py-4 justify-center h-full">
-            <h1 className="text-5xl font-semibold relative">
+          <div className="flex h-full flex-col justify-center gap-5 px-6 py-10 md:px-10">
+            <h1 className="relative text-4xl font-semibold md:text-5xl">
               Upgrade
               <br /> Your Setup For Peak
               <br /> Performance
             </h1>
-            <p className="max-w-3xl relative">
+            <p className="relative max-w-3xl">
               Experience the perfect mix of power and reliability. From office
               work to gaming, our custom PCs deliver speed and style. Build
               yours to match your needs and budget.
             </p>
 
-            <Button className="w-fit flex gap-4 relative">
-              Explore Our Product{" "}
-              <span className="p-1 rounded-full bg-white">
-                <ArrowUpRight
-                  size={30}
-                  className=" rounded-full  text-button"
-                />
-              </span>
+            <Button asChild className="relative flex w-fit gap-4">
+              <Link href="/shop">
+                Explore Products{" "}
+                <span className="p-1 rounded-full bg-white">
+                  <ArrowUpRight size={30} className="rounded-full text-button" />
+                </span>
+              </Link>
             </Button>
           </div>
         </div>

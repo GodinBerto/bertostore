@@ -6,14 +6,14 @@ import Link from "next/link";
 export default function SubNavbar() {
   return (
     <GridLayout>
-      <div className="grid grid-cols-4">
-        <div className="col-span-1 bg-background-primary text-foreground-primary px-3 py-2 flex justify-between items-center">
+      <div className="grid grid-cols-1 md:grid-cols-4">
+        <div className="col-span-1 flex items-center justify-between bg-background-primary px-3 py-2 text-foreground-primary">
           <h1 className="text-sm">All Categories</h1>
           <Menu />
         </div>
 
-        <div className="col-span-3">
-          <ul className="grid grid-cols-4 text-sm">
+        <div className="col-span-1 md:col-span-3">
+          <ul className="grid grid-cols-2 text-sm md:grid-cols-4">
             {navLinks.map((link, index) => (
               <li
                 key={index}
