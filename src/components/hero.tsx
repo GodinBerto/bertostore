@@ -5,12 +5,24 @@ import GridLayout from "./ui/grid";
 import { categoriesLinks } from "@/constant/links";
 import Link from "next/link";
 import BackgroundCover from "./backgroundCover";
+import { cn } from "@/lib/utils";
+import { useCategoriesUiStore } from "@/store/categories-ui-store";
 
 export default function HeroSection() {
+  const isDesktopHeroCategoriesOpen = useCategoriesUiStore(
+    (state) => state.isDesktopHeroCategoriesOpen
+  );
+
   return (
     <GridLayout>
       <div className="grid grid-cols-1 md:grid-cols-4">
-        <div className="col-span-1 border-r border-border">
+        <div
+          id="hero-categories-panel"
+          className={cn(
+            "col-span-1 hidden border-r border-border md:block",
+            !isDesktopHeroCategoriesOpen && "md:hidden"
+          )}
+        >
           <ul className="flex flex-col">
             {categoriesLinks.map(({ label, href, icon: Icon }) => (
               <li key={label} className="group">
@@ -26,7 +38,12 @@ export default function HeroSection() {
           </ul>
         </div>
 
-        <div className="relative col-span-1 bg-[url('/images/hero-bg.jpg')] bg-cover bg-center bg-no-repeat text-white md:col-span-3">
+        <div
+          className={cn(
+            "relative col-span-1 bg-[url('/images/hero-bg.jpg')] bg-cover bg-center bg-no-repeat text-white",
+            isDesktopHeroCategoriesOpen ? "md:col-span-3" : "md:col-span-4"
+          )}
+        >
           <BackgroundCover />
           <div className="flex h-full flex-col justify-center gap-5 px-6 py-10 md:px-10">
             <h1 className="relative text-4xl font-semibold md:text-5xl">

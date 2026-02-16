@@ -26,12 +26,12 @@ export default function DashboardSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-full border-r border-border bg-white p-4 lg:w-64">
+    <aside className="h-full w-full bg-white p-4">
       <Link href="/dashboard" className="text-xl font-semibold">
         BERTO <span className="text-blue-600">ADMIN</span>
       </Link>
 
-      <nav className="mt-6 space-y-1">
+      <nav className="mt-6 space-y-1 border-y border-border py-3">
         {links.map((link) => {
           const Icon = link.icon;
           const active = pathname === link.href;
@@ -53,7 +53,7 @@ export default function DashboardSidebar() {
         })}
       </nav>
 
-      <div className="mt-8 space-y-1">
+      <div className="mt-6 space-y-1">
         <Link
           href="/"
           className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-background-secondary"
