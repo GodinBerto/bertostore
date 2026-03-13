@@ -12,6 +12,7 @@ BertoStore is now a full-stack dropshipping app with:
 - Next.js App Router (`src/app`)
 - TypeScript + Tailwind CSS v4
 - Local JSON database files in `data/`
+- Bundled seed data in `src/data/`
 
 ## Quick Start
 
@@ -40,7 +41,7 @@ npm run dev
 
 ## Default Admin Credentials
 
-When `data/users.json` is empty, the app seeds an admin user using:
+When the runtime user store is empty, the app seeds an admin user using:
 
 - Email: `DEFAULT_ADMIN_EMAIL` (default `admin@bertostore.com`)
 - Password: `DEFAULT_ADMIN_PASSWORD` (default `Admin123!`)
@@ -78,5 +79,6 @@ Change these values in `.env.local` before production use.
 ## Notes
 
 - Data persists to `data/products.json`, `data/users.json`, and `data/orders.json`.
+- On Vercel, runtime writes are redirected to `/tmp/bertostore-data`, seeded from `src/data/`, so changes are temporary across cold starts and redeploys.
 - Session signing uses `SESSION_SECRET`; set a strong secret in production.
 - Replace placeholder supplier URLs with your real dropshipping suppliers.

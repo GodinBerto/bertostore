@@ -1,7 +1,11 @@
-﻿import { randomUUID } from "node:crypto";
+import { randomUUID } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import path from "node:path";
 
+import bundledOrdersJson from "@/data/orders.json";
+import bundledProductsJson from "@/data/products.json";
+import bundledUsersJson from "@/data/users.json";
 import {
   AppUser,
   DashboardStats,
@@ -16,10 +20,18 @@ import {
 import { hashPassword } from "@/lib/password";
 import { seedProducts } from "@/lib/seed-data";
 
-const DATA_DIR = path.join(process.cwd(), "data");
+const DEFAULT_DATA_DIR = path.join(process.cwd(), "data");
+const DATA_DIR =
+  process.env.DATA_DIR?.trim() ||
+  // Vercel's deployment bundle is read-only, so runtime writes have to use `/tmp`.
+  (process.env.VERCEL ? path.join(tmpdir(), "bertostore-data") : DEFAULT_DATA_DIR);
 const USERS_FILE = path.join(DATA_DIR, "users.json");
 const PRODUCTS_FILE = path.join(DATA_DIR, "products.json");
 const ORDERS_FILE = path.join(DATA_DIR, "orders.json");
+
+const bundledUsers = bundledUsersJson as AppUser[];
+const bundledProducts = bundledProductsJson as Product[];
+const bundledOrders = bundledOrdersJson as Order[];
 
 let readyPromise: Promise<void> | null = null;
 
@@ -35,11 +47,15 @@ function slugify(value: string): string {
     .replace(/(^-|-$)/g, "");
 }
 
+function cloneJson<T>(value: T): T {
+  return JSON.parse(JSON.stringify(value)) as T;
+}
+
 function parseJson<T>(raw: string, fallback: T): T {
   try {
     return JSON.parse(raw) as T;
   } catch {
-    return fallback;
+    return cloneJson(fallback);
   }
 }
 
@@ -48,12 +64,12 @@ async function readJsonFile<T>(filePath: string, fallback: T): Promise<T> {
     const raw = await readFile(filePath, "utf8");
 
     if (!raw.trim()) {
-      return fallback;
+      return cloneJson(fallback);
     }
 
     return parseJson(raw, fallback);
   } catch {
-    return fallback;
+    return cloneJson(fallback);
   }
 }
 
@@ -91,31 +107,53 @@ function createOrderNumber(): string {
   return `BST-${numericPart}${randomPart}`;
 }
 
-async function initializeData(): Promise<void> {
-  await mkdir(DATA_DIR, { recursive: true });
+function getSeedUsers(): AppUser[] {
+  if (bundledUsers.length > 0) {
+    return cloneJson(bundledUsers);
+  }
 
-  const users = await readJsonFile<AppUser[]>(USERS_FILE, []);
-  const products = await readJsonFile<Product[]>(PRODUCTS_FILE, []);
-  const orders = await readJsonFile<Order[]>(ORDERS_FILE, []);
+  const adminEmail = normalizeEmail(
+    process.env.DEFAULT_ADMIN_EMAIL ?? "admin@bertostore.com"
+  );
+  const adminPassword = process.env.DEFAULT_ADMIN_PASSWORD ?? "Admin123!";
 
-  if (users.length === 0) {
-    const adminEmail = normalizeEmail(
-      process.env.DEFAULT_ADMIN_EMAIL ?? "admin@bertostore.com"
-    );
-    const adminPassword = process.env.DEFAULT_ADMIN_PASSWORD ?? "Admin123!";
-
-    users.push({
+  return [
+    {
       id: randomUUID(),
       name: "Store Admin",
       email: adminEmail,
       passwordHash: hashPassword(adminPassword),
       role: "admin",
       createdAt: new Date().toISOString(),
-    });
+    },
+  ];
+}
+
+function getSeedProducts(): Product[] {
+  if (bundledProducts.length > 0) {
+    return cloneJson(bundledProducts);
+  }
+
+  return seedProducts.map((product) => buildProduct(product));
+}
+
+function getSeedOrders(): Order[] {
+  return cloneJson(bundledOrders);
+}
+
+async function initializeData(): Promise<void> {
+  await mkdir(DATA_DIR, { recursive: true });
+
+  const users = await readJsonFile<AppUser[]>(USERS_FILE, getSeedUsers());
+  const products = await readJsonFile<Product[]>(PRODUCTS_FILE, getSeedProducts());
+  const orders = await readJsonFile<Order[]>(ORDERS_FILE, getSeedOrders());
+
+  if (users.length === 0) {
+    users.push(...getSeedUsers());
   }
 
   if (products.length === 0) {
-    products.push(...seedProducts.map((product) => buildProduct(product)));
+    products.push(...getSeedProducts());
   }
 
   await Promise.all([
