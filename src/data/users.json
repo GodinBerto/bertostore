@@ -1,0 +1,10 @@
+[
+  {
+    "id": "84037bf3-89ea-4fd0-bced-d6f90cb9e81e",
+    "name": "Store Admin",
+    "email": "admin@bertostore.com",
+    "passwordHash": "f2dbad8d51963d7f3433722f6172ee22:82658de8c04346b2e615b0a4b380051ed51d5546593e419218c7600aea6654bda9147eecafb4e1bdd333beab1d24a2e5f26ca8ed300956ab9f5c4ae3790c9c0e",
+    "role": "admin",
+    "createdAt": "2026-03-13T01:47:16.379Z"
+  }
+]
